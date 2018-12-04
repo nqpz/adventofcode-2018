@@ -1,0 +1,17 @@
+#!/bin/sh
+
+PROGRAM_FLAGS="-std=c11"
+emitter="$1"
+from_make="$2"
+
+set -e
+if [ "$from_make" ]; then
+    set -x
+fi
+
+program="$(mktemp)"
+
+"./$emitter" | gcc $PROGRAM_FLAGS -o "$program" -x c -
+"$program"
+
+rm "$program"
